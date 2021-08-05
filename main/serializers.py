@@ -38,7 +38,7 @@ class RequestMeetingSerializer(serializers.ModelSerializer):
 class UploadTopicSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = UploadTopic
-		fields = ['title', 'date', 'supervisor']
+		fields = ['id','title', 'date', 'supervisor']
 
 class UploadProjectSerializer(serializers.ModelSerializer):
 	class Meta:

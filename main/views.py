@@ -55,6 +55,34 @@ def ReqMeetingApi(request, id=0):
         return JsonResponse('An Error Occured, Thats all we know', safe=False)
 
 
+@csrf_exempt
+def UploadTopicApi(request, id=0):
+    if request.method == 'GET':
+        topic = UploadTopic.objects.all()
+        topicSerializer = UploadTopicSerializer(topic, many=True)
+        return JsonResponse(topicSerializer.data, safe=False)
+    elif request.method == 'POST':
+        topicData = JSONParser().parse(request)
+        topicSerializer = UploadTopicSerializer(data=topicData)
+        if topicSerializer.is_valid():
+            topicSerializer.save()
+            return JsonResponse('Project Topic Upload Successfully', safe=False)
+        return JsonResponse('There is an error somewhere', safe=False)
+    elif request.method=='PUT':
+        topicData=JSONParser().parse(request)
+        topic = UploadTopic.objects.get(id=topicData['id'])
+        topicSerializer= UploadTopicSerializer(topic, data=topicData)
+        if topicSerializer.is_valid():
+            topicSerializer.save()
+            return JsonResponse('Update Successfully', safe=False)
+        return JsonResponse('An Error Occured, Thats all we know', safe=False)
+
+
+
+
+
+
+
 
 # This is where my problem is, how to submit texts and file to server
 @csrf_exempt
@@ -63,7 +91,6 @@ def ChapterApi(request):
         chapter = UploadChapter(request.POST, request.FILES)
         chaptersSerializer=UploadChapterSerializer(data=chapter)
         if chaptersSerializer.is_valid():
-            # file is saved
             chaptersSerializer.save()
             return JsonResponse('Chapter Added Successfully', safe=False)
     else:

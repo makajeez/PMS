@@ -82,7 +82,8 @@ class RequestMeeting(models.Model):
 class UploadTopic(models.Model):
 	title = models.CharField(max_length=100, null=False)
 	date = models.DateTimeField(auto_now_add=True)
-	supervisor = models.ForeignKey(Supervisor, on_delete=models.CASCADE)
+	supervisor = models.CharField(max_length=50, null=False)
+	# supervisor = models.ForeignKey(Supervisor, on_delete=models.CASCADE)
 
 	def __str__(self):
 		return f'{self.title} - {self.date} - {self.supervisor}'

@@ -3,7 +3,7 @@ from rest_framework import serializers
 from rest_auth.registration.serializers import RegisterSerializer	
 from .models import *
 
-class RegistretionSerializer(RegisterSerializer):
+class RegistrationSerializer(RegisterSerializer):
 	first_name = serializers.CharField(required=False)
 	last_name = serializers.CharField(required=False)
 
@@ -27,7 +27,7 @@ class UploadChapterSerializer(serializers.ModelSerializer):
 class RequestMeetingSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = RequestMeeting
-		fields = ['date', 'time', 'student', 'supervisor', 'status']
+		fields = ['id','date', 'time', 'student', 'supervisor', 'status']
 
 # Student Activity Model Serializer Ends
 

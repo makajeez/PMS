@@ -42,16 +42,6 @@ post_save.connect(create_profile, sender=User)
 
 
 # Student Activity Model Begin
-class UploadChapter(models.Model):
-	chapter_number = models.CharField(max_length=50, choices=chapters)
-	chapter_file = models.FileField(upload_to="files")
-	student = models.ForeignKey(User,on_delete=models.CASCADE)
-	supervisor = models.ForeignKey(Supervisor, on_delete=models.CASCADE)
-	status = models.CharField(max_length=100, choices=status, default="Pending")
-
-	def __str__(self):
-		return f'{self.student} - {self.chapter_number}'
-
 class UploadProposal(models.Model):
 	proposal_title = models.CharField(max_length=100, default='')
 	proposal_file = models.FileField(upload_to="files", null=True)
@@ -62,15 +52,19 @@ class UploadProposal(models.Model):
 	def __str__(self):
 		return f'{self.student} - {self.proposal_title}'
 
-# def create_proposal(sender, instance, created, **kwargs):
-# 	if created:
-# 		UploadProposal.objects.create(student = instance)
-# post_save.connect(create_proposal, sender=User)
+class UploadChapter(models.Model):
+	chapter_number = models.CharField(max_length=50, choices=chapters)
+	chapter_file = models.FileField(upload_to="files")
+	student = models.ForeignKey(User,on_delete=models.CASCADE)
+	supervisor = models.ForeignKey(Supervisor, on_delete=models.CASCADE)
+	status = models.CharField(max_length=100, choices=status, default="Pending")
 
+	def __str__(self):
+		return f'{self.student} - {self.chapter_number}'
 
 class RequestMeeting(models.Model):
-	date = models.CharField(max_length=15)
-	time = models.CharField(max_length=6, default='12/12/2021')
+	date = models.CharField(max_length=15, default='')
+	time = models.CharField(max_length=6)
 	student = models.CharField(max_length=50)
 	supervisor = models.CharField(max_length=50)
 	status = models.CharField(max_length=15, choices=status, default="Pending")

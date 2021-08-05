@@ -23,3 +23,5 @@ class UploadProposalSerializer(serializers.ModelSerializer):
 		model = UploadProposal
 		fields = ['proposal_title', 'proposal_file', 'supervisor', 'student', 'status']
 ```
+
+I need help with the views in views.py to send these data..

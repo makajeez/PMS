@@ -17,12 +17,12 @@ class RegistrationSerializer(RegisterSerializer):
 class UploadProposalSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = UploadProposal
-		fields = ['proposal_title', 'proposal_file', 'supervisor', 'student', 'status']
+		fields = ['id', 'proposal_title', 'proposal_file', 'supervisor', 'student', 'status']
 
 class UploadChapterSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = UploadChapter
-		fields = ['chapter_number', 'chapter_file', 'student', 'supervisor', 'status']
+		fields = ['id', 'chapter_number', 'chapter_file', 'student', 'supervisor', 'status']
 
 class RequestMeetingSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -43,12 +43,12 @@ class UploadTopicSerializer(serializers.ModelSerializer):
 class UploadProjectSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = UploadProject
-		fields = ['student', 'project_title', 'project_file', 'year', 'supervisor']
+		fields = ['id', 'student', 'project_title', 'project_file', 'year', 'supervisor']
 
 class SendInviteSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = SendInvite
-		fields = ['date', 'time', 'student', 'supervisor', 'venue']
+		fields = ['id','date', 'time', 'student', 'supervisor', 'venue']
 	
 
 # Student Activity Model Serializer Ends

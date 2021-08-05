@@ -19,7 +19,7 @@ from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
 from rest_framework.authtoken import views
-from main.views import  ChapterApi, CustomAuthToken
+from main.views import  CustomAuthToken
 
 
 urlpatterns = [

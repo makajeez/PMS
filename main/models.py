@@ -44,9 +44,9 @@ post_save.connect(create_profile, sender=User)
 # Student Activity Model Begin
 class UploadProposal(models.Model):
 	proposal_title = models.CharField(max_length=100, default='')
-	proposal_file = models.FileField(upload_to="files", null=True)
-	student = models.ForeignKey(User, on_delete=models.CASCADE)
-	supervisor = models.ForeignKey(Supervisor, on_delete=models.CASCADE)
+	proposal_file = models.FileField(upload_to="proposal", null=False, default='-')
+	student = models.CharField(max_length=30)
+	supervisor = models.CharField(max_length=30)
 	status = models.CharField(max_length=10, choices=status, default="Pending")
 
 	def __str__(self):
@@ -54,9 +54,9 @@ class UploadProposal(models.Model):
 
 class UploadChapter(models.Model):
 	chapter_number = models.CharField(max_length=50, choices=chapters)
-	chapter_file = models.FileField(upload_to="files")
-	student = models.ForeignKey(User,on_delete=models.CASCADE)
-	supervisor = models.ForeignKey(Supervisor, on_delete=models.CASCADE)
+	chapter_file = models.FileField(upload_to="chapter")
+	student = models.CharField(max_length=30, default='CST/16/COM/00543')
+	supervisor = models.CharField(max_length=30, default='Dr. F U Ambursa')
 	status = models.CharField(max_length=100, choices=status, default="Pending")
 
 	def __str__(self):
@@ -101,8 +101,8 @@ class UploadProject(models.Model):
 class SendInvite(models.Model):
 	date = models.CharField(max_length=15)
 	time = models.CharField(max_length=6)
-	student = models.ForeignKey(User, on_delete=models.CASCADE)
-	supervisor = models.ForeignKey(Supervisor, on_delete=models.CASCADE)
+	student = models.CharField(max_length=50)
+	supervisor = models.CharField(max_length=50)
 	venue = models.CharField(max_length=50)
 
 	def __str__(self):

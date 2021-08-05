@@ -1,9 +1,10 @@
+
 from django.http.request import QueryDict
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view
-from rest_framework.parsers import JSONParser, MultiPartParser
+from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -54,7 +55,6 @@ def ReqMeetingApi(request, id=0):
             return JsonResponse('Update Successfully', safe=False)
         return JsonResponse('An Error Occured, Thats all we know', safe=False)
 
-
 @csrf_exempt
 def UploadTopicApi(request, id=0):
     if request.method == 'GET':
@@ -77,22 +77,58 @@ def UploadTopicApi(request, id=0):
             return JsonResponse('Update Successfully', safe=False)
         return JsonResponse('An Error Occured, Thats all we know', safe=False)
 
-
-
-
-
-
-
-
-# This is where my problem is, how to submit texts and file to server
 @csrf_exempt
-def ChapterApi(request):
-    if request.method == 'POST':
-        chapter = UploadChapter(request.POST, request.FILES)
-        chaptersSerializer=UploadChapterSerializer(data=chapter)
-        if chaptersSerializer.is_valid():
-            chaptersSerializer.save()
-            return JsonResponse('Chapter Added Successfully', safe=False)
-    else:
-        chapter = UploadChapter()
-    return JsonResponse('upload fail', safe=False)
+def SendInviteApi(request, id=0):
+    if request.method == 'GET':
+        invite = SendInvite.objects.all()
+        inviteSerializer = SendInviteSerializer(invite, many=True)
+        return JsonResponse(inviteSerializer.data, safe=False)
+    elif request.method == 'POST':
+        inviteData = JSONParser().parse(request)
+        inviteSerializer = SendInviteSerializer(data=inviteData)
+        if inviteSerializer.is_valid():
+            inviteSerializer.save()
+            return JsonResponse('Invitation Sent', safe=False)
+        return JsonResponse('There is an error somewhere', safe=False)
+
+class ProposalView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+    def post(self, request, *args, **kwargs):
+        file_serializer = UploadProposalSerializer(data=request.data)
+        if file_serializer.is_valid():
+            file_serializer.save()
+            return JsonResponse('Proposal Sent Successfully', safe=False)
+        else:
+            return JsonResponse('upload fail', safe=False)
+    def get(self, request):
+        files = UploadProposal.objects.all()
+        filesSerializer = UploadProposalSerializer(files, many=True)
+        return JsonResponse(filesSerializer.data, safe=False) 
+
+class ChapterView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+    def post(self, request, *args, **kwargs):
+        chapter_serializer = UploadChapterSerializer(data=request.data)
+        if chapter_serializer.is_valid():
+            chapter_serializer.save()
+            return JsonResponse('Chapter Sent Successfully', safe=False)
+        else:
+            return JsonResponse('upload fail', safe=False)
+    def get(self, request):
+        chapter = UploadChapter.objects.all()
+        chapterSerializer = UploadChapterSerializer(chapter, many=True)
+        return JsonResponse(chapterSerializer.data, safe=False) 
+
+class ProjectView(APIView):
+    parser_classes = (MultiPartParser, FormParser)
+    def post(self, request, *args, **kwargs):
+        project_serializer = UploadProjectSerializer(data=request.data)
+        if project_serializer.is_valid():
+            project_serializer.save()
+            return JsonResponse('Sent Successfully', safe=False)
+        else:
+            return JsonResponse('upload fail', safe=False)
+    def get(self, request):
+        project = UploadProject.objects.all()
+        projectSerializer = UploadProjectSerializer(project, many=True)
+        return JsonResponse(projectSerializer.data, safe=False) 

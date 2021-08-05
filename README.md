@@ -14,3 +14,12 @@ class UploadProposal(models.Model):
 	def __str__(self):
 		return f'{self.student} - {self.proposal_title}'
 ```
+
+and this is the serializer
+
+```
+class UploadProposalSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = UploadProposal
+		fields = ['proposal_title', 'proposal_file', 'supervisor', 'student', 'status']
+```

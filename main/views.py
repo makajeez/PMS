@@ -9,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.views import ObtainAuthToken
 from django.http.response import JsonResponse
+from rest_auth.registration.views import RegisterView
 
 from django.core.files.storage import default_storage
 
@@ -18,6 +19,12 @@ from .models import *
 # Create your views here.
 for user in User.objects.all():
 	Token.objects.get_or_create(user=user)
+
+def UserApi(request):
+    if request.method == 'GET':
+        user = User.objects.all()
+        userSerializer = RegisterSerializer(user, many=True)
+        return JsonResponse(userSerializer.data, safe=False)
 
 
 class CustomAuthToken(ObtainAuthToken):
@@ -30,7 +37,9 @@ class CustomAuthToken(ObtainAuthToken):
             'token': token.key,
             'user_id': user.pk,
             'email': user.email,
-            'username': user.username
+            'username': user.username,
+            'firstname': user.first_name,
+            'lastname': user.last_name
         })
 
 @csrf_exempt

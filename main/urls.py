@@ -8,5 +8,6 @@ urlpatterns = [
     url(r'^project/$', ProjectView.as_view()),
     url(r'^req_meeting/', ReqMeetingApi),
     url(r'^upload_topic/', UploadTopicApi),
-    url(r'^invite', SendInviteApi)
+    url(r'^invite/', SendInviteApi),
+    url(r'^user/', UserApi)
 ]

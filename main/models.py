@@ -14,6 +14,7 @@ chapters = (
 	("Chapter Three", "Chapter Three"),
 	("Chapter Four", "Chapter Four"),
 	("Chapter Five", "Chapter Five"),
+	("All Chapters", "All Chapters")
 	)
 
 # Create your models here.

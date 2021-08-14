@@ -1,4 +1,5 @@
 
+import json
 from django.http.request import QueryDict
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
@@ -9,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.views import ObtainAuthToken
 from django.http.response import Http404, JsonResponse
+from django.contrib.auth.models import User
 from rest_auth.registration.views import RegisterView
 
 from django.core.files.storage import default_storage
@@ -20,12 +22,18 @@ from .models import *
 for user in User.objects.all():
 	Token.objects.get_or_create(user=user)
 
+@csrf_exempt
 def UserApi(request):
     if request.method == 'GET':
         user = User.objects.all()
         userSerializer = RegisterSerializer(user, many=True)
         return JsonResponse(userSerializer.data, safe=False)
 
+def SupervisorApi(request):
+    if request.method == 'GET':
+        supervisor = Supervisor.objects.all()
+        superSerializer = SupervisorSerializer(supervisor, many=True)
+        return JsonResponse(superSerializer.data, safe=False)
 
 class CustomAuthToken(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
@@ -38,8 +46,9 @@ class CustomAuthToken(ObtainAuthToken):
             'user_id': user.pk,
             'email': user.email,
             'username': user.username,
-            'firstname': user.first_name,
-            'lastname': user.last_name
+            # 'fullname': user.fullname,
+            # 'lastname': user.last_name,
+            # 'supervisor': user.supervisor
         })
 
 

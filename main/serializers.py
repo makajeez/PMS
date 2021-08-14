@@ -3,6 +3,12 @@ from rest_framework import serializers
 from rest_auth.registration.serializers import RegisterSerializer	
 from .models import *
 
+class SupervisorSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Supervisor
+		fields = '__all__'
+
+
 class RegistrationSerializer(RegisterSerializer):
 	first_name = serializers.CharField(required=False)
 	last_name = serializers.CharField(required=False)

@@ -8,10 +8,12 @@ urlpatterns = [
     url(r'^proposal/$', ProposalView.as_view()),
     path('proposal/<int:pk>/', ProposalView.as_view()),
     url(r'^chapter/$', ChapterView.as_view()),
+    url(r'^chapter/<int:pk>/', ChapterView.as_view()),
     url(r'^project/$', ProjectView.as_view()),
     url(r'^req_meeting/', ReqMeetingApi),
     url(r'^upload_topic/', UploadTopicApi),
     url(r'^invite/', SendInviteApi),
-    url(r'^user/', UserApi)
+    url(r'^user/', UserApi),
+    path('super/', SupervisorApi)
 ]
 urlpatterns = format_suffix_patterns(urlpatterns)

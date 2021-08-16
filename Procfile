@@ -1,0 +1,1 @@
+web: gunicorn ProjectPMS.wsgi --log-file -

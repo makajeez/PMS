@@ -117,6 +117,14 @@ class ChapterView(APIView):
         chapter = UploadChapter.objects.all()
         chapterSerializer = UploadChapterSerializer(chapter, many=True)
         return JsonResponse(chapterSerializer.data, safe=False) 
+    def put(self, request, pk):
+        chapter = UploadChapter.objects.get(pk = pk)
+        chapterSerializer = UploadChapterSerializer(chapter, data=request.data)
+        if chapterSerializer.is_valid():
+            chapterSerializer.save()
+            return JsonResponse('Updated Successfully', safe=False)
+        else:
+            return JsonResponse('update fail', safe=False)
 
 # student activity views ends
 

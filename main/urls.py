@@ -8,7 +8,7 @@ urlpatterns = [
     url(r'^proposal/$', ProposalView.as_view()),
     path('proposal/<int:pk>/', ProposalView.as_view()),
     url(r'^chapter/$', ChapterView.as_view()),
-    url(r'^chapter/<int:pk>/', ChapterView.as_view()),
+    path('chapter/<int:pk>/', ChapterView.as_view()),
     url(r'^project/$', ProjectView.as_view()),
     url(r'^req_meeting/', ReqMeetingApi),
     url(r'^upload_topic/', UploadTopicApi),
